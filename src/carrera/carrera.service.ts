@@ -31,4 +31,10 @@ export class CarreraService {
       data,
     });
   }
+
+  deleteCarrera(id: number) {
+    return this.prismaService.carrera.delete({
+      where: { id },
+    });
+  }
 }

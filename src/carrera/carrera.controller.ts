@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { CarreraService } from './carrera.service';
 import { Carrera } from './entity/carrera.entity';
 
@@ -19,5 +27,10 @@ export class CarreraController {
   @Put(':id')
   updateUser(@Param('id') id: string, @Body() dto: Carrera) {
     return this.carreraService.updateCarrera(Number(id), dto);
+  }
+
+  @Delete(':id')
+  deleteUser(@Param('id') id: string) {
+    return this.carreraService.deleteCarrera(Number(id));
   }
 }
