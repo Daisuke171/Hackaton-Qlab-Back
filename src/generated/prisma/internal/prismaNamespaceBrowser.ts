@@ -52,7 +52,11 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   User: 'User',
-  Carrera: 'Carrera'
+  Facultad: 'Facultad',
+  Carrera: 'Carrera',
+  Materia: 'Materia',
+  Tema: 'Tema',
+  Recurso: 'Recurso'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -81,14 +85,53 @@ export const UserScalarFieldEnum = {
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
+export const FacultadScalarFieldEnum = {
+  id: 'id',
+  nombreFacultad: 'nombreFacultad'
+} as const
+
+export type FacultadScalarFieldEnum = (typeof FacultadScalarFieldEnum)[keyof typeof FacultadScalarFieldEnum]
+
+
 export const CarreraScalarFieldEnum = {
   id: 'id',
-  title: 'title',
-  course: 'course',
-  createdAt: 'createdAt'
+  nombreCarrera: 'nombreCarrera',
+  facultadId: 'facultadId',
+  estadoCarrera: 'estadoCarrera'
 } as const
 
 export type CarreraScalarFieldEnum = (typeof CarreraScalarFieldEnum)[keyof typeof CarreraScalarFieldEnum]
+
+
+export const MateriaScalarFieldEnum = {
+  idMateria: 'idMateria',
+  nombreMateria: 'nombreMateria',
+  descripcion: 'descripcion',
+  carreraId: 'carreraId',
+  estadoMateria: 'estadoMateria'
+} as const
+
+export type MateriaScalarFieldEnum = (typeof MateriaScalarFieldEnum)[keyof typeof MateriaScalarFieldEnum]
+
+
+export const TemaScalarFieldEnum = {
+  idTema: 'idTema',
+  nombreTema: 'nombreTema',
+  descripcion: 'descripcion',
+  materiaId: 'materiaId'
+} as const
+
+export type TemaScalarFieldEnum = (typeof TemaScalarFieldEnum)[keyof typeof TemaScalarFieldEnum]
+
+
+export const RecursoScalarFieldEnum = {
+  idRecurso: 'idRecurso',
+  linkRecurso: 'linkRecurso',
+  contextoIA: 'contextoIA',
+  idTema: 'idTema'
+} as const
+
+export type RecursoScalarFieldEnum = (typeof RecursoScalarFieldEnum)[keyof typeof RecursoScalarFieldEnum]
 
 
 export const SortOrder = {

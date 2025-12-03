@@ -20,7 +20,7 @@ const config: runtime.GetPrismaClientConfig = {
   "clientVersion": "7.0.1",
   "engineVersion": "f09f2815f091dbba658cdcd2264306d88bb5bda6",
   "activeProvider": "postgresql",
-  "inlineSchema": "datasource db {\n  provider = \"postgresql\"\n}\n\ngenerator client {\n  provider     = \"prisma-client\"\n  output       = \"../src/generated/prisma\"\n  moduleFormat = \"cjs\"\n}\n\nmodel User {\n  id        Int      @id @default(autoincrement())\n  email     String   @unique\n  name      String?\n  createdAt DateTime @default(now())\n}\n\nmodel Carrera {\n  id        Int      @id @default(autoincrement())\n  title     String\n  course    String[]\n  createdAt DateTime @default(now())\n}\n",
+  "inlineSchema": "datasource db {\n  provider = \"postgresql\"\n}\n\ngenerator client {\n  provider     = \"prisma-client\"\n  output       = \"../src/generated/prisma\"\n  moduleFormat = \"cjs\"\n}\n\nmodel User {\n  id        Int      @id @default(autoincrement())\n  email     String   @unique\n  name      String?\n  createdAt DateTime @default(now())\n}\n\nmodel Facultad {\n  id             Int    @id @default(autoincrement())\n  nombreFacultad String\n\n  carreras Carrera[]\n}\n\nmodel Carrera {\n  id            Int    @id @default(autoincrement())\n  nombreCarrera String\n\n  facultadId Int\n  facultad   Facultad @relation(fields: [facultadId], references: [id])\n\n  materias Materia[]\n\n  estadoCarrera Boolean\n}\n\nmodel Materia {\n  idMateria     Int    @id @default(autoincrement())\n  nombreMateria String\n  descripcion   String\n\n  carreraId Int\n  carrera   Carrera @relation(fields: [carreraId], references: [id])\n\n  temas Tema[]\n\n  estadoMateria Boolean\n}\n\nmodel Tema {\n  idTema      String @id\n  nombreTema  String\n  descripcion String\n\n  materiaId Int\n  materia   Materia @relation(fields: [materiaId], references: [idMateria])\n\n  recurso Recurso?\n}\n\nmodel Recurso {\n  idRecurso   Int    @id @default(autoincrement())\n  linkRecurso String\n  contextoIA  String\n\n  idTema String @unique\n  tema   Tema   @relation(fields: [idTema], references: [idTema])\n}\n",
   "runtimeDataModel": {
     "models": {},
     "enums": {},
@@ -28,7 +28,7 @@ const config: runtime.GetPrismaClientConfig = {
   }
 }
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Carrera\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"course\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Facultad\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"nombreFacultad\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"carreras\",\"kind\":\"object\",\"type\":\"Carrera\",\"relationName\":\"CarreraToFacultad\"}],\"dbName\":null},\"Carrera\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"nombreCarrera\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"facultadId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"facultad\",\"kind\":\"object\",\"type\":\"Facultad\",\"relationName\":\"CarreraToFacultad\"},{\"name\":\"materias\",\"kind\":\"object\",\"type\":\"Materia\",\"relationName\":\"CarreraToMateria\"},{\"name\":\"estadoCarrera\",\"kind\":\"scalar\",\"type\":\"Boolean\"}],\"dbName\":null},\"Materia\":{\"fields\":[{\"name\":\"idMateria\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"nombreMateria\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"descripcion\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"carreraId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"carrera\",\"kind\":\"object\",\"type\":\"Carrera\",\"relationName\":\"CarreraToMateria\"},{\"name\":\"temas\",\"kind\":\"object\",\"type\":\"Tema\",\"relationName\":\"MateriaToTema\"},{\"name\":\"estadoMateria\",\"kind\":\"scalar\",\"type\":\"Boolean\"}],\"dbName\":null},\"Tema\":{\"fields\":[{\"name\":\"idTema\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"nombreTema\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"descripcion\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"materiaId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"materia\",\"kind\":\"object\",\"type\":\"Materia\",\"relationName\":\"MateriaToTema\"},{\"name\":\"recurso\",\"kind\":\"object\",\"type\":\"Recurso\",\"relationName\":\"RecursoToTema\"}],\"dbName\":null},\"Recurso\":{\"fields\":[{\"name\":\"idRecurso\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"linkRecurso\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"contextoIA\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"idTema\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"tema\",\"kind\":\"object\",\"type\":\"Tema\",\"relationName\":\"RecursoToTema\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 
 async function decodeBase64AsWasm(wasmBase64: string): Promise<WebAssembly.Module> {
   const { Buffer } = await import('node:buffer')
@@ -185,6 +185,16 @@ export interface PrismaClient<
   get user(): Prisma.UserDelegate<ExtArgs, { omit: OmitOpts }>;
 
   /**
+   * `prisma.facultad`: Exposes CRUD operations for the **Facultad** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Facultads
+    * const facultads = await prisma.facultad.findMany()
+    * ```
+    */
+  get facultad(): Prisma.FacultadDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
    * `prisma.carrera`: Exposes CRUD operations for the **Carrera** model.
     * Example usage:
     * ```ts
@@ -193,6 +203,36 @@ export interface PrismaClient<
     * ```
     */
   get carrera(): Prisma.CarreraDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.materia`: Exposes CRUD operations for the **Materia** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Materias
+    * const materias = await prisma.materia.findMany()
+    * ```
+    */
+  get materia(): Prisma.MateriaDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.tema`: Exposes CRUD operations for the **Tema** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Temas
+    * const temas = await prisma.tema.findMany()
+    * ```
+    */
+  get tema(): Prisma.TemaDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.recurso`: Exposes CRUD operations for the **Recurso** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Recursos
+    * const recursos = await prisma.recurso.findMany()
+    * ```
+    */
+  get recurso(): Prisma.RecursoDelegate<ExtArgs, { omit: OmitOpts }>;
 }
 
 export function getPrismaClientClass(): PrismaClientConstructor {

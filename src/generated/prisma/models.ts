@@ -9,5 +9,9 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/User.js'
+export type * from './models/Facultad.js'
 export type * from './models/Carrera.js'
+export type * from './models/Materia.js'
+export type * from './models/Tema.js'
+export type * from './models/Recurso.js'
 export type * from './commonInputTypes.js'

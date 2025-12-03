@@ -15,9 +15,54 @@ model User {
   createdAt DateTime @default(now())
 }
 
+model Facultad {
+  id             Int       @id @default(autoincrement())
+  nombreFacultad String
+
+  carreras       Carrera[]
+}
+
 model Carrera {
-  id        Int      @default(autoincrement()) @id
-  title     String
-  course    String[]
-  createdAt DateTime @default(now())
+  id            Int      @id @default(autoincrement())
+  nombreCarrera String
+
+  facultadId Int
+  facultad   Facultad @relation(fields: [facultadId], references: [id])
+
+  materias   Materia[]
+
+  estadoCarrera Boolean @default(true)
+}
+
+model Materia {
+  idMateria     Int      @id @default(autoincrement())
+  nombreMateria String
+  descripcion   String
+
+  carreraId Int
+  carrera   Carrera @relation(fields: [carreraId], references: [id])
+
+  temas     Tema[]
+
+  estadoMateria Boolean @default(true)
+}
+
+model Tema {
+  idTema      String  @id
+  nombreTema  String
+  descripcion String
+
+  materiaId Int
+  materia   Materia @relation(fields: [materiaId], references: [idMateria])
+
+  recurso   Recurso?
+}
+
+model Recurso {
+  idRecurso   Int    @id @default(autoincrement())
+  linkRecurso String
+  contextoIA  String
+
+  idTema   String @unique
+  tema     Tema   @relation(fields: [idTema], references: [idTema])
 }

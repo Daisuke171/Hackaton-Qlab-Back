@@ -28,58 +28,66 @@ export type AggregateCarrera = {
 
 export type CarreraAvgAggregateOutputType = {
   id: number | null
+  facultadId: number | null
 }
 
 export type CarreraSumAggregateOutputType = {
   id: number | null
+  facultadId: number | null
 }
 
 export type CarreraMinAggregateOutputType = {
   id: number | null
-  title: string | null
-  createdAt: Date | null
+  nombreCarrera: string | null
+  facultadId: number | null
+  estadoCarrera: boolean | null
 }
 
 export type CarreraMaxAggregateOutputType = {
   id: number | null
-  title: string | null
-  createdAt: Date | null
+  nombreCarrera: string | null
+  facultadId: number | null
+  estadoCarrera: boolean | null
 }
 
 export type CarreraCountAggregateOutputType = {
   id: number
-  title: number
-  course: number
-  createdAt: number
+  nombreCarrera: number
+  facultadId: number
+  estadoCarrera: number
   _all: number
 }
 
 
 export type CarreraAvgAggregateInputType = {
   id?: true
+  facultadId?: true
 }
 
 export type CarreraSumAggregateInputType = {
   id?: true
+  facultadId?: true
 }
 
 export type CarreraMinAggregateInputType = {
   id?: true
-  title?: true
-  createdAt?: true
+  nombreCarrera?: true
+  facultadId?: true
+  estadoCarrera?: true
 }
 
 export type CarreraMaxAggregateInputType = {
   id?: true
-  title?: true
-  createdAt?: true
+  nombreCarrera?: true
+  facultadId?: true
+  estadoCarrera?: true
 }
 
 export type CarreraCountAggregateInputType = {
   id?: true
-  title?: true
-  course?: true
-  createdAt?: true
+  nombreCarrera?: true
+  facultadId?: true
+  estadoCarrera?: true
   _all?: true
 }
 
@@ -171,9 +179,9 @@ export type CarreraGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
 
 export type CarreraGroupByOutputType = {
   id: number
-  title: string
-  course: string[]
-  createdAt: Date
+  nombreCarrera: string
+  facultadId: number
+  estadoCarrera: boolean
   _count: CarreraCountAggregateOutputType | null
   _avg: CarreraAvgAggregateOutputType | null
   _sum: CarreraSumAggregateOutputType | null
@@ -201,16 +209,20 @@ export type CarreraWhereInput = {
   OR?: Prisma.CarreraWhereInput[]
   NOT?: Prisma.CarreraWhereInput | Prisma.CarreraWhereInput[]
   id?: Prisma.IntFilter<"Carrera"> | number
-  title?: Prisma.StringFilter<"Carrera"> | string
-  course?: Prisma.StringNullableListFilter<"Carrera">
-  createdAt?: Prisma.DateTimeFilter<"Carrera"> | Date | string
+  nombreCarrera?: Prisma.StringFilter<"Carrera"> | string
+  facultadId?: Prisma.IntFilter<"Carrera"> | number
+  estadoCarrera?: Prisma.BoolFilter<"Carrera"> | boolean
+  facultad?: Prisma.XOR<Prisma.FacultadScalarRelationFilter, Prisma.FacultadWhereInput>
+  materias?: Prisma.MateriaListRelationFilter
 }
 
 export type CarreraOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  title?: Prisma.SortOrder
-  course?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
+  nombreCarrera?: Prisma.SortOrder
+  facultadId?: Prisma.SortOrder
+  estadoCarrera?: Prisma.SortOrder
+  facultad?: Prisma.FacultadOrderByWithRelationInput
+  materias?: Prisma.MateriaOrderByRelationAggregateInput
 }
 
 export type CarreraWhereUniqueInput = Prisma.AtLeast<{
@@ -218,16 +230,18 @@ export type CarreraWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.CarreraWhereInput | Prisma.CarreraWhereInput[]
   OR?: Prisma.CarreraWhereInput[]
   NOT?: Prisma.CarreraWhereInput | Prisma.CarreraWhereInput[]
-  title?: Prisma.StringFilter<"Carrera"> | string
-  course?: Prisma.StringNullableListFilter<"Carrera">
-  createdAt?: Prisma.DateTimeFilter<"Carrera"> | Date | string
+  nombreCarrera?: Prisma.StringFilter<"Carrera"> | string
+  facultadId?: Prisma.IntFilter<"Carrera"> | number
+  estadoCarrera?: Prisma.BoolFilter<"Carrera"> | boolean
+  facultad?: Prisma.XOR<Prisma.FacultadScalarRelationFilter, Prisma.FacultadWhereInput>
+  materias?: Prisma.MateriaListRelationFilter
 }, "id">
 
 export type CarreraOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  title?: Prisma.SortOrder
-  course?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
+  nombreCarrera?: Prisma.SortOrder
+  facultadId?: Prisma.SortOrder
+  estadoCarrera?: Prisma.SortOrder
   _count?: Prisma.CarreraCountOrderByAggregateInput
   _avg?: Prisma.CarreraAvgOrderByAggregateInput
   _max?: Prisma.CarreraMaxOrderByAggregateInput
@@ -240,141 +254,370 @@ export type CarreraScalarWhereWithAggregatesInput = {
   OR?: Prisma.CarreraScalarWhereWithAggregatesInput[]
   NOT?: Prisma.CarreraScalarWhereWithAggregatesInput | Prisma.CarreraScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Carrera"> | number
-  title?: Prisma.StringWithAggregatesFilter<"Carrera"> | string
-  course?: Prisma.StringNullableListFilter<"Carrera">
-  createdAt?: Prisma.DateTimeWithAggregatesFilter<"Carrera"> | Date | string
+  nombreCarrera?: Prisma.StringWithAggregatesFilter<"Carrera"> | string
+  facultadId?: Prisma.IntWithAggregatesFilter<"Carrera"> | number
+  estadoCarrera?: Prisma.BoolWithAggregatesFilter<"Carrera"> | boolean
 }
 
 export type CarreraCreateInput = {
-  title: string
-  course?: Prisma.CarreraCreatecourseInput | string[]
-  createdAt?: Date | string
+  nombreCarrera: string
+  estadoCarrera: boolean
+  facultad: Prisma.FacultadCreateNestedOneWithoutCarrerasInput
+  materias?: Prisma.MateriaCreateNestedManyWithoutCarreraInput
 }
 
 export type CarreraUncheckedCreateInput = {
   id?: number
-  title: string
-  course?: Prisma.CarreraCreatecourseInput | string[]
-  createdAt?: Date | string
+  nombreCarrera: string
+  facultadId: number
+  estadoCarrera: boolean
+  materias?: Prisma.MateriaUncheckedCreateNestedManyWithoutCarreraInput
 }
 
 export type CarreraUpdateInput = {
-  title?: Prisma.StringFieldUpdateOperationsInput | string
-  course?: Prisma.CarreraUpdatecourseInput | string[]
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nombreCarrera?: Prisma.StringFieldUpdateOperationsInput | string
+  estadoCarrera?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  facultad?: Prisma.FacultadUpdateOneRequiredWithoutCarrerasNestedInput
+  materias?: Prisma.MateriaUpdateManyWithoutCarreraNestedInput
 }
 
 export type CarreraUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  title?: Prisma.StringFieldUpdateOperationsInput | string
-  course?: Prisma.CarreraUpdatecourseInput | string[]
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nombreCarrera?: Prisma.StringFieldUpdateOperationsInput | string
+  facultadId?: Prisma.IntFieldUpdateOperationsInput | number
+  estadoCarrera?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  materias?: Prisma.MateriaUncheckedUpdateManyWithoutCarreraNestedInput
 }
 
 export type CarreraCreateManyInput = {
   id?: number
-  title: string
-  course?: Prisma.CarreraCreatecourseInput | string[]
-  createdAt?: Date | string
+  nombreCarrera: string
+  facultadId: number
+  estadoCarrera: boolean
 }
 
 export type CarreraUpdateManyMutationInput = {
-  title?: Prisma.StringFieldUpdateOperationsInput | string
-  course?: Prisma.CarreraUpdatecourseInput | string[]
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nombreCarrera?: Prisma.StringFieldUpdateOperationsInput | string
+  estadoCarrera?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type CarreraUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  title?: Prisma.StringFieldUpdateOperationsInput | string
-  course?: Prisma.CarreraUpdatecourseInput | string[]
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nombreCarrera?: Prisma.StringFieldUpdateOperationsInput | string
+  facultadId?: Prisma.IntFieldUpdateOperationsInput | number
+  estadoCarrera?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
-export type StringNullableListFilter<$PrismaModel = never> = {
-  equals?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel> | null
-  has?: string | Prisma.StringFieldRefInput<$PrismaModel> | null
-  hasEvery?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
-  hasSome?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
-  isEmpty?: boolean
+export type CarreraListRelationFilter = {
+  every?: Prisma.CarreraWhereInput
+  some?: Prisma.CarreraWhereInput
+  none?: Prisma.CarreraWhereInput
+}
+
+export type CarreraOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type CarreraCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  title?: Prisma.SortOrder
-  course?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
+  nombreCarrera?: Prisma.SortOrder
+  facultadId?: Prisma.SortOrder
+  estadoCarrera?: Prisma.SortOrder
 }
 
 export type CarreraAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  facultadId?: Prisma.SortOrder
 }
 
 export type CarreraMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  title?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
+  nombreCarrera?: Prisma.SortOrder
+  facultadId?: Prisma.SortOrder
+  estadoCarrera?: Prisma.SortOrder
 }
 
 export type CarreraMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  title?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
+  nombreCarrera?: Prisma.SortOrder
+  facultadId?: Prisma.SortOrder
+  estadoCarrera?: Prisma.SortOrder
 }
 
 export type CarreraSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  facultadId?: Prisma.SortOrder
 }
 
-export type CarreraCreatecourseInput = {
-  set: string[]
+export type CarreraScalarRelationFilter = {
+  is?: Prisma.CarreraWhereInput
+  isNot?: Prisma.CarreraWhereInput
 }
 
-export type CarreraUpdatecourseInput = {
-  set?: string[]
-  push?: string | string[]
+export type CarreraCreateNestedManyWithoutFacultadInput = {
+  create?: Prisma.XOR<Prisma.CarreraCreateWithoutFacultadInput, Prisma.CarreraUncheckedCreateWithoutFacultadInput> | Prisma.CarreraCreateWithoutFacultadInput[] | Prisma.CarreraUncheckedCreateWithoutFacultadInput[]
+  connectOrCreate?: Prisma.CarreraCreateOrConnectWithoutFacultadInput | Prisma.CarreraCreateOrConnectWithoutFacultadInput[]
+  createMany?: Prisma.CarreraCreateManyFacultadInputEnvelope
+  connect?: Prisma.CarreraWhereUniqueInput | Prisma.CarreraWhereUniqueInput[]
 }
 
+export type CarreraUncheckedCreateNestedManyWithoutFacultadInput = {
+  create?: Prisma.XOR<Prisma.CarreraCreateWithoutFacultadInput, Prisma.CarreraUncheckedCreateWithoutFacultadInput> | Prisma.CarreraCreateWithoutFacultadInput[] | Prisma.CarreraUncheckedCreateWithoutFacultadInput[]
+  connectOrCreate?: Prisma.CarreraCreateOrConnectWithoutFacultadInput | Prisma.CarreraCreateOrConnectWithoutFacultadInput[]
+  createMany?: Prisma.CarreraCreateManyFacultadInputEnvelope
+  connect?: Prisma.CarreraWhereUniqueInput | Prisma.CarreraWhereUniqueInput[]
+}
+
+export type CarreraUpdateManyWithoutFacultadNestedInput = {
+  create?: Prisma.XOR<Prisma.CarreraCreateWithoutFacultadInput, Prisma.CarreraUncheckedCreateWithoutFacultadInput> | Prisma.CarreraCreateWithoutFacultadInput[] | Prisma.CarreraUncheckedCreateWithoutFacultadInput[]
+  connectOrCreate?: Prisma.CarreraCreateOrConnectWithoutFacultadInput | Prisma.CarreraCreateOrConnectWithoutFacultadInput[]
+  upsert?: Prisma.CarreraUpsertWithWhereUniqueWithoutFacultadInput | Prisma.CarreraUpsertWithWhereUniqueWithoutFacultadInput[]
+  createMany?: Prisma.CarreraCreateManyFacultadInputEnvelope
+  set?: Prisma.CarreraWhereUniqueInput | Prisma.CarreraWhereUniqueInput[]
+  disconnect?: Prisma.CarreraWhereUniqueInput | Prisma.CarreraWhereUniqueInput[]
+  delete?: Prisma.CarreraWhereUniqueInput | Prisma.CarreraWhereUniqueInput[]
+  connect?: Prisma.CarreraWhereUniqueInput | Prisma.CarreraWhereUniqueInput[]
+  update?: Prisma.CarreraUpdateWithWhereUniqueWithoutFacultadInput | Prisma.CarreraUpdateWithWhereUniqueWithoutFacultadInput[]
+  updateMany?: Prisma.CarreraUpdateManyWithWhereWithoutFacultadInput | Prisma.CarreraUpdateManyWithWhereWithoutFacultadInput[]
+  deleteMany?: Prisma.CarreraScalarWhereInput | Prisma.CarreraScalarWhereInput[]
+}
+
+export type CarreraUncheckedUpdateManyWithoutFacultadNestedInput = {
+  create?: Prisma.XOR<Prisma.CarreraCreateWithoutFacultadInput, Prisma.CarreraUncheckedCreateWithoutFacultadInput> | Prisma.CarreraCreateWithoutFacultadInput[] | Prisma.CarreraUncheckedCreateWithoutFacultadInput[]
+  connectOrCreate?: Prisma.CarreraCreateOrConnectWithoutFacultadInput | Prisma.CarreraCreateOrConnectWithoutFacultadInput[]
+  upsert?: Prisma.CarreraUpsertWithWhereUniqueWithoutFacultadInput | Prisma.CarreraUpsertWithWhereUniqueWithoutFacultadInput[]
+  createMany?: Prisma.CarreraCreateManyFacultadInputEnvelope
+  set?: Prisma.CarreraWhereUniqueInput | Prisma.CarreraWhereUniqueInput[]
+  disconnect?: Prisma.CarreraWhereUniqueInput | Prisma.CarreraWhereUniqueInput[]
+  delete?: Prisma.CarreraWhereUniqueInput | Prisma.CarreraWhereUniqueInput[]
+  connect?: Prisma.CarreraWhereUniqueInput | Prisma.CarreraWhereUniqueInput[]
+  update?: Prisma.CarreraUpdateWithWhereUniqueWithoutFacultadInput | Prisma.CarreraUpdateWithWhereUniqueWithoutFacultadInput[]
+  updateMany?: Prisma.CarreraUpdateManyWithWhereWithoutFacultadInput | Prisma.CarreraUpdateManyWithWhereWithoutFacultadInput[]
+  deleteMany?: Prisma.CarreraScalarWhereInput | Prisma.CarreraScalarWhereInput[]
+}
+
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
+}
+
+export type CarreraCreateNestedOneWithoutMateriasInput = {
+  create?: Prisma.XOR<Prisma.CarreraCreateWithoutMateriasInput, Prisma.CarreraUncheckedCreateWithoutMateriasInput>
+  connectOrCreate?: Prisma.CarreraCreateOrConnectWithoutMateriasInput
+  connect?: Prisma.CarreraWhereUniqueInput
+}
+
+export type CarreraUpdateOneRequiredWithoutMateriasNestedInput = {
+  create?: Prisma.XOR<Prisma.CarreraCreateWithoutMateriasInput, Prisma.CarreraUncheckedCreateWithoutMateriasInput>
+  connectOrCreate?: Prisma.CarreraCreateOrConnectWithoutMateriasInput
+  upsert?: Prisma.CarreraUpsertWithoutMateriasInput
+  connect?: Prisma.CarreraWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CarreraUpdateToOneWithWhereWithoutMateriasInput, Prisma.CarreraUpdateWithoutMateriasInput>, Prisma.CarreraUncheckedUpdateWithoutMateriasInput>
+}
+
+export type CarreraCreateWithoutFacultadInput = {
+  nombreCarrera: string
+  estadoCarrera: boolean
+  materias?: Prisma.MateriaCreateNestedManyWithoutCarreraInput
+}
+
+export type CarreraUncheckedCreateWithoutFacultadInput = {
+  id?: number
+  nombreCarrera: string
+  estadoCarrera: boolean
+  materias?: Prisma.MateriaUncheckedCreateNestedManyWithoutCarreraInput
+}
+
+export type CarreraCreateOrConnectWithoutFacultadInput = {
+  where: Prisma.CarreraWhereUniqueInput
+  create: Prisma.XOR<Prisma.CarreraCreateWithoutFacultadInput, Prisma.CarreraUncheckedCreateWithoutFacultadInput>
+}
+
+export type CarreraCreateManyFacultadInputEnvelope = {
+  data: Prisma.CarreraCreateManyFacultadInput | Prisma.CarreraCreateManyFacultadInput[]
+  skipDuplicates?: boolean
+}
+
+export type CarreraUpsertWithWhereUniqueWithoutFacultadInput = {
+  where: Prisma.CarreraWhereUniqueInput
+  update: Prisma.XOR<Prisma.CarreraUpdateWithoutFacultadInput, Prisma.CarreraUncheckedUpdateWithoutFacultadInput>
+  create: Prisma.XOR<Prisma.CarreraCreateWithoutFacultadInput, Prisma.CarreraUncheckedCreateWithoutFacultadInput>
+}
+
+export type CarreraUpdateWithWhereUniqueWithoutFacultadInput = {
+  where: Prisma.CarreraWhereUniqueInput
+  data: Prisma.XOR<Prisma.CarreraUpdateWithoutFacultadInput, Prisma.CarreraUncheckedUpdateWithoutFacultadInput>
+}
+
+export type CarreraUpdateManyWithWhereWithoutFacultadInput = {
+  where: Prisma.CarreraScalarWhereInput
+  data: Prisma.XOR<Prisma.CarreraUpdateManyMutationInput, Prisma.CarreraUncheckedUpdateManyWithoutFacultadInput>
+}
+
+export type CarreraScalarWhereInput = {
+  AND?: Prisma.CarreraScalarWhereInput | Prisma.CarreraScalarWhereInput[]
+  OR?: Prisma.CarreraScalarWhereInput[]
+  NOT?: Prisma.CarreraScalarWhereInput | Prisma.CarreraScalarWhereInput[]
+  id?: Prisma.IntFilter<"Carrera"> | number
+  nombreCarrera?: Prisma.StringFilter<"Carrera"> | string
+  facultadId?: Prisma.IntFilter<"Carrera"> | number
+  estadoCarrera?: Prisma.BoolFilter<"Carrera"> | boolean
+}
+
+export type CarreraCreateWithoutMateriasInput = {
+  nombreCarrera: string
+  estadoCarrera: boolean
+  facultad: Prisma.FacultadCreateNestedOneWithoutCarrerasInput
+}
+
+export type CarreraUncheckedCreateWithoutMateriasInput = {
+  id?: number
+  nombreCarrera: string
+  facultadId: number
+  estadoCarrera: boolean
+}
+
+export type CarreraCreateOrConnectWithoutMateriasInput = {
+  where: Prisma.CarreraWhereUniqueInput
+  create: Prisma.XOR<Prisma.CarreraCreateWithoutMateriasInput, Prisma.CarreraUncheckedCreateWithoutMateriasInput>
+}
+
+export type CarreraUpsertWithoutMateriasInput = {
+  update: Prisma.XOR<Prisma.CarreraUpdateWithoutMateriasInput, Prisma.CarreraUncheckedUpdateWithoutMateriasInput>
+  create: Prisma.XOR<Prisma.CarreraCreateWithoutMateriasInput, Prisma.CarreraUncheckedCreateWithoutMateriasInput>
+  where?: Prisma.CarreraWhereInput
+}
+
+export type CarreraUpdateToOneWithWhereWithoutMateriasInput = {
+  where?: Prisma.CarreraWhereInput
+  data: Prisma.XOR<Prisma.CarreraUpdateWithoutMateriasInput, Prisma.CarreraUncheckedUpdateWithoutMateriasInput>
+}
+
+export type CarreraUpdateWithoutMateriasInput = {
+  nombreCarrera?: Prisma.StringFieldUpdateOperationsInput | string
+  estadoCarrera?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  facultad?: Prisma.FacultadUpdateOneRequiredWithoutCarrerasNestedInput
+}
+
+export type CarreraUncheckedUpdateWithoutMateriasInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  nombreCarrera?: Prisma.StringFieldUpdateOperationsInput | string
+  facultadId?: Prisma.IntFieldUpdateOperationsInput | number
+  estadoCarrera?: Prisma.BoolFieldUpdateOperationsInput | boolean
+}
+
+export type CarreraCreateManyFacultadInput = {
+  id?: number
+  nombreCarrera: string
+  estadoCarrera: boolean
+}
+
+export type CarreraUpdateWithoutFacultadInput = {
+  nombreCarrera?: Prisma.StringFieldUpdateOperationsInput | string
+  estadoCarrera?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  materias?: Prisma.MateriaUpdateManyWithoutCarreraNestedInput
+}
+
+export type CarreraUncheckedUpdateWithoutFacultadInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  nombreCarrera?: Prisma.StringFieldUpdateOperationsInput | string
+  estadoCarrera?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  materias?: Prisma.MateriaUncheckedUpdateManyWithoutCarreraNestedInput
+}
+
+export type CarreraUncheckedUpdateManyWithoutFacultadInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  nombreCarrera?: Prisma.StringFieldUpdateOperationsInput | string
+  estadoCarrera?: Prisma.BoolFieldUpdateOperationsInput | boolean
+}
+
+
+/**
+ * Count Type CarreraCountOutputType
+ */
+
+export type CarreraCountOutputType = {
+  materias: number
+}
+
+export type CarreraCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  materias?: boolean | CarreraCountOutputTypeCountMateriasArgs
+}
+
+/**
+ * CarreraCountOutputType without action
+ */
+export type CarreraCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CarreraCountOutputType
+   */
+  select?: Prisma.CarreraCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * CarreraCountOutputType without action
+ */
+export type CarreraCountOutputTypeCountMateriasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MateriaWhereInput
+}
 
 
 export type CarreraSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  title?: boolean
-  course?: boolean
-  createdAt?: boolean
+  nombreCarrera?: boolean
+  facultadId?: boolean
+  estadoCarrera?: boolean
+  facultad?: boolean | Prisma.FacultadDefaultArgs<ExtArgs>
+  materias?: boolean | Prisma.Carrera$materiasArgs<ExtArgs>
+  _count?: boolean | Prisma.CarreraCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["carrera"]>
 
 export type CarreraSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  title?: boolean
-  course?: boolean
-  createdAt?: boolean
+  nombreCarrera?: boolean
+  facultadId?: boolean
+  estadoCarrera?: boolean
+  facultad?: boolean | Prisma.FacultadDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["carrera"]>
 
 export type CarreraSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  title?: boolean
-  course?: boolean
-  createdAt?: boolean
+  nombreCarrera?: boolean
+  facultadId?: boolean
+  estadoCarrera?: boolean
+  facultad?: boolean | Prisma.FacultadDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["carrera"]>
 
 export type CarreraSelectScalar = {
   id?: boolean
-  title?: boolean
-  course?: boolean
-  createdAt?: boolean
+  nombreCarrera?: boolean
+  facultadId?: boolean
+  estadoCarrera?: boolean
 }
 
-export type CarreraOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "course" | "createdAt", ExtArgs["result"]["carrera"]>
+export type CarreraOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nombreCarrera" | "facultadId" | "estadoCarrera", ExtArgs["result"]["carrera"]>
+export type CarreraInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  facultad?: boolean | Prisma.FacultadDefaultArgs<ExtArgs>
+  materias?: boolean | Prisma.Carrera$materiasArgs<ExtArgs>
+  _count?: boolean | Prisma.CarreraCountOutputTypeDefaultArgs<ExtArgs>
+}
+export type CarreraIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  facultad?: boolean | Prisma.FacultadDefaultArgs<ExtArgs>
+}
+export type CarreraIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  facultad?: boolean | Prisma.FacultadDefaultArgs<ExtArgs>
+}
 
 export type $CarreraPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Carrera"
-  objects: {}
+  objects: {
+    facultad: Prisma.$FacultadPayload<ExtArgs>
+    materias: Prisma.$MateriaPayload<ExtArgs>[]
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
-    title: string
-    course: string[]
-    createdAt: Date
+    nombreCarrera: string
+    facultadId: number
+    estadoCarrera: boolean
   }, ExtArgs["result"]["carrera"]>
   composites: {}
 }
@@ -769,6 +1012,8 @@ readonly fields: CarreraFieldRefs;
  */
 export interface Prisma__CarreraClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  facultad<T extends Prisma.FacultadDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FacultadDefaultArgs<ExtArgs>>): Prisma.Prisma__FacultadClient<runtime.Types.Result.GetResult<Prisma.$FacultadPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  materias<T extends Prisma.Carrera$materiasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Carrera$materiasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MateriaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -799,9 +1044,9 @@ export interface Prisma__CarreraClient<T, Null = never, ExtArgs extends runtime.
  */
 export interface CarreraFieldRefs {
   readonly id: Prisma.FieldRef<"Carrera", 'Int'>
-  readonly title: Prisma.FieldRef<"Carrera", 'String'>
-  readonly course: Prisma.FieldRef<"Carrera", 'String[]'>
-  readonly createdAt: Prisma.FieldRef<"Carrera", 'DateTime'>
+  readonly nombreCarrera: Prisma.FieldRef<"Carrera", 'String'>
+  readonly facultadId: Prisma.FieldRef<"Carrera", 'Int'>
+  readonly estadoCarrera: Prisma.FieldRef<"Carrera", 'Boolean'>
 }
     
 
@@ -818,6 +1063,10 @@ export type CarreraFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Omit specific fields from the Carrera
    */
   omit?: Prisma.CarreraOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CarreraInclude<ExtArgs> | null
   /**
    * Filter, which Carrera to fetch.
    */
@@ -837,6 +1086,10 @@ export type CarreraFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extension
    */
   omit?: Prisma.CarreraOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CarreraInclude<ExtArgs> | null
+  /**
    * Filter, which Carrera to fetch.
    */
   where: Prisma.CarreraWhereUniqueInput
@@ -854,6 +1107,10 @@ export type CarreraFindFirstArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Omit specific fields from the Carrera
    */
   omit?: Prisma.CarreraOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CarreraInclude<ExtArgs> | null
   /**
    * Filter, which Carrera to fetch.
    */
@@ -903,6 +1160,10 @@ export type CarreraFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions
    */
   omit?: Prisma.CarreraOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CarreraInclude<ExtArgs> | null
+  /**
    * Filter, which Carrera to fetch.
    */
   where?: Prisma.CarreraWhereInput
@@ -951,6 +1212,10 @@ export type CarreraFindManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
    */
   omit?: Prisma.CarreraOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CarreraInclude<ExtArgs> | null
+  /**
    * Filter, which Carreras to fetch.
    */
   where?: Prisma.CarreraWhereInput
@@ -994,6 +1259,10 @@ export type CarreraCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    */
   omit?: Prisma.CarreraOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CarreraInclude<ExtArgs> | null
+  /**
    * The data needed to create a Carrera.
    */
   data: Prisma.XOR<Prisma.CarreraCreateInput, Prisma.CarreraUncheckedCreateInput>
@@ -1027,6 +1296,10 @@ export type CarreraCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensi
    */
   data: Prisma.CarreraCreateManyInput | Prisma.CarreraCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CarreraIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1041,6 +1314,10 @@ export type CarreraUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    * Omit specific fields from the Carrera
    */
   omit?: Prisma.CarreraOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CarreraInclude<ExtArgs> | null
   /**
    * The data needed to update a Carrera.
    */
@@ -1093,6 +1370,10 @@ export type CarreraUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensi
    * Limit how many Carreras to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CarreraIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1107,6 +1388,10 @@ export type CarreraUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    * Omit specific fields from the Carrera
    */
   omit?: Prisma.CarreraOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CarreraInclude<ExtArgs> | null
   /**
    * The filter to search for the Carrera to update in case it exists.
    */
@@ -1134,6 +1419,10 @@ export type CarreraDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    */
   omit?: Prisma.CarreraOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CarreraInclude<ExtArgs> | null
+  /**
    * Filter which Carrera to delete.
    */
   where: Prisma.CarreraWhereUniqueInput
@@ -1154,6 +1443,30 @@ export type CarreraDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
 }
 
 /**
+ * Carrera.materias
+ */
+export type Carrera$materiasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Materia
+   */
+  select?: Prisma.MateriaSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Materia
+   */
+  omit?: Prisma.MateriaOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MateriaInclude<ExtArgs> | null
+  where?: Prisma.MateriaWhereInput
+  orderBy?: Prisma.MateriaOrderByWithRelationInput | Prisma.MateriaOrderByWithRelationInput[]
+  cursor?: Prisma.MateriaWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MateriaScalarFieldEnum | Prisma.MateriaScalarFieldEnum[]
+}
+
+/**
  * Carrera without action
  */
 export type CarreraDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1165,4 +1478,8 @@ export type CarreraDefaultArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Omit specific fields from the Carrera
    */
   omit?: Prisma.CarreraOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CarreraInclude<ExtArgs> | null
 }

@@ -23,7 +23,27 @@ export * from './enums.js';
  */
 export type User = Prisma.UserModel
 /**
+ * Model Facultad
+ * 
+ */
+export type Facultad = Prisma.FacultadModel
+/**
  * Model Carrera
  * 
  */
 export type Carrera = Prisma.CarreraModel
+/**
+ * Model Materia
+ * 
+ */
+export type Materia = Prisma.MateriaModel
+/**
+ * Model Tema
+ * 
+ */
+export type Tema = Prisma.TemaModel
+/**
+ * Model Recurso
+ * 
+ */
+export type Recurso = Prisma.RecursoModel
