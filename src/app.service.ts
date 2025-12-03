@@ -8,4 +8,10 @@ export class AppService {
   getHello() {
     return this.prismaService.user.findMany();
   }
+
+  createHello(data: { name: string; email: string; password: string }) {
+    return this.prismaService.user.create({
+      data,
+    });
+  }
 }
