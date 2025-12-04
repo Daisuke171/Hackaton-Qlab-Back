@@ -7,23 +7,36 @@ import { Prisma } from 'src/generated/prisma/client';
 export class CarreraService {
   constructor(private readonly prismaService: PrismaService) {}
 
+  // Obtener todas las carreras
   getCarreras() {
-    return this.prismaService.carrera.findMany();
+    return this.prismaService.carrera.findMany({
+      include: {
+        facultad: true,
+      },
+    });
   }
 
+  // Crear carrera
   createCarrera(dto: Carrera) {
     const data: Prisma.CarreraCreateInput = {
-      title: dto.title,
-      course: dto.course,
+      nombreCarrera: dto.nombreCarrera,
+      estadoCarrera: dto.estadoCarrera,
+      facultad: {
+        connect: { id: dto.facultadId },
+      },
     };
 
     return this.prismaService.carrera.create({ data });
   }
 
+  // Actualizar carrera
   updateCarrera(id: number, dto: Carrera) {
     const data: Prisma.CarreraUpdateInput = {
-      title: dto.title,
-      course: dto.course, // string[]
+      nombreCarrera: dto.nombreCarrera,
+      estadoCarrera: dto.estadoCarrera,
+      facultad: {
+        connect: { id: dto.facultadId },
+      },
     };
 
     return this.prismaService.carrera.update({
@@ -32,6 +45,7 @@ export class CarreraService {
     });
   }
 
+  // Eliminar carrera
   deleteCarrera(id: number) {
     return this.prismaService.carrera.delete({
       where: { id },

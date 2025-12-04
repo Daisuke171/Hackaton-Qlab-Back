@@ -1,4 +1,7 @@
+import { Facultad } from 'src/generated/prisma/client';
+
 export class Carrera {
-  title: string;
-  course: string[];
+  nombreCarrera: string;
+  facultadId: number;
+  estadoCarrera: boolean;
 }
